@@ -1,6 +1,7 @@
 package com.orhanararat.controller;
 
 import com.orhanararat.model.CurrencyExchange;
+import com.orhanararat.service.CurrencyExchangeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +15,10 @@ import java.math.BigDecimal;
 public class CurrencyExchangeController {
 
     private final Environment environment;
+    private final CurrencyExchangeService currencyExchangeService;
 
     @GetMapping("currency-exchange/from/{from}/to/{to}")
     public CurrencyExchange getCurrencyExchange(@PathVariable String from, @PathVariable String to) {
-        return new CurrencyExchange(100L, from, to, BigDecimal.valueOf(50),environment.getProperty("server.port"));
+        return currencyExchangeService.findCurrencyExchangeByFromAndTo(from, to);
     }
 }
